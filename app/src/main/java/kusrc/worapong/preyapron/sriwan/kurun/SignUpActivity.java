@@ -18,6 +18,9 @@ public class SignUpActivity extends AppCompatActivity {
     private RadioButton avata1RadioButton, avata2RadioButton,
             avata3RadioButton, avata4RadioButton, avata5RadioButton;
 
+    private String nameString, surnameString, idSTUString,
+            yearString, userString, passwordString, avataString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,36 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void clickSignUpSign(View view) {
 
+        nameString = nameEditText.getText().toString().trim();
+        surnameString = surnameEditText.getText().toString().trim();
+        idSTUString = idSTUEditText.getText().toString().trim();
+        userString = userEditText.getText().toString().trim();
+        passwordString = passwordEditText.getText().toString().trim();
+
+        //Check Space
+        if (checkSpace()) {
+            //Have Space
+            MyAlertDialog myAlertDialog = new MyAlertDialog();
+            myAlertDialog.myDialog(SignUpActivity.this,
+                    "มีช่องว่าง",
+                    "กรุณากรอก ทุกช่องคะ");
+
+        } else {
+            //No Space
+
+        }
+
+    }   // clickSignUp
+
+    private boolean checkSpace() {
+
+        boolean bolStatus = nameString.equals("") ||
+                surnameString.equals("") ||
+                idSTUString.equals("") ||
+                userString.equals("") ||
+                passwordString.equals("");
+
+        return bolStatus;
     }
 
     private void bindWidget() {
@@ -43,6 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
         avata2RadioButton = (RadioButton) findViewById(R.id.radioButton2);
         avata3RadioButton = (RadioButton) findViewById(R.id.radioButton3);
         avata4RadioButton = (RadioButton) findViewById(R.id.radioButton4);
+        avata5RadioButton = (RadioButton) findViewById(R.id.radioButton5);
 
 
     } //bindWidget
