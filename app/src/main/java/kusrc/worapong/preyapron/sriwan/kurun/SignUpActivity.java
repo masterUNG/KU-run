@@ -1,5 +1,6 @@
 package kusrc.worapong.preyapron.sriwan.kurun;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
             avata3RadioButton, avata4RadioButton, avata5RadioButton;
 
     private String nameString, surnameString, idSTUString,
-            yearString, userString, passwordString, avataString;
+            yearString, userString, passwordString, avataString = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,39 @@ public class SignUpActivity extends AppCompatActivity {
         //Create Year Spinner
         createYearSpinner();
 
+        //Radio Controller
+        radioController();
+
     } //main method
+
+    private void radioController() {
+
+        avataRadiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                switch (i) {
+                    case R.id.radioButton:
+                        avataString = "0";
+                        break;
+                    case R.id.radioButton2:
+                        avataString = "1";
+                        break;
+                    case R.id.radioButton3:
+                        avataString = "2";
+                        break;
+                    case R.id.radioButton4:
+                        avataString = "3";
+                        break;
+                    case R.id.radioButton5:
+                        avataString = "4";
+                        break;
+                }
+
+            }   // onChecked
+        });
+
+    }   // radioController
 
     private void createYearSpinner() {
 
@@ -76,10 +109,38 @@ public class SignUpActivity extends AppCompatActivity {
 
         } else {
             //No Space
+            confirmData();
 
         }
 
     }   // clickSignUp
+
+    private void confirmData() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(findAvata(avataString));
+        builder.setTitle(nameString + " " + surnameString);
+        builder.setMessage("โปรดตรวจข้อมูล" + "\n" +
+        getResources().getString(R.string.ID_Student) + " " + idSTUString + "\n" +
+        getResources().getString(R.string.Year) + " " + yearString + "\n" +
+        getResources().getString(R.string.User) + " " + userString + "\n" +
+        getResources().getString(R.string.Password) + " " + passwordString);
+
+
+        builder.show();
+
+
+
+
+    }   // confirmData
+
+    private int findAvata(String avataString) {
+
+        FindAvata findAvata = new FindAvata();
+        int intAvata = findAvata.myFindAvata(avataString);
+
+        return intAvata;
+    }
 
     private boolean checkSpace() {
 
