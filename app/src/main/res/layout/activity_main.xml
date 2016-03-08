@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:text="@string/signin"
             android:id="@+id/button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="clickSignInMain" />
 
         <Button
             android:layout_width="wrap_content"
@@ -61,7 +62,8 @@
             android:layout_width="@dimen/edit"
             android:layout_height="wrap_content"
             android:id="@+id/editText2"
-            android:hint="@string/user" />
+            android:hint="@string/user"
+            android:inputType="text" />
 
         <EditText
             android:layout_width="@dimen/edit"
@@ -69,7 +71,8 @@
             android:id="@+id/editText"
             android:layout_below="@+id/linearLayout2"
             android:layout_centerHorizontal="true"
-            android:hint="@string/pass" />
+            android:hint="@string/pass"
+            android:inputType="textPassword" />
 
     </LinearLayout>
 
