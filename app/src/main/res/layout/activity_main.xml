@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="kusrc.worapong.preyapron.sriwan.kurun.MainActivity"
-    android:background="@drawable/bg25">
+    android:background="@drawable/bg">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -46,7 +46,7 @@
             android:layout_width="@dimen/icon"
             android:layout_height="@dimen/icon"
             android:id="@+id/imageView"
-            android:src="@drawable/speaker" />
+            android:src="@drawable/kaset" />
 
         <TextView
             android:layout_width="wrap_content"
