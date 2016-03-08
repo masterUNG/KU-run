@@ -32,6 +32,22 @@ public class MyManage {
 
     }   // Constructor
 
+    public String[] searchUser(String strUser) {
+
+        try {
+
+            String[] resultStrings = null;
+
+
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return new String[0];
+    }
+
+
     public long addUser(String strName,
                         String strSurname,
                         String strIDstudent,
