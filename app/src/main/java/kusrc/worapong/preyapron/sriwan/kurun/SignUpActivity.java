@@ -3,6 +3,8 @@ package kusrc.worapong.preyapron.sriwan.kurun;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,9 +27,36 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         //Bind Widget
         bindWidget();
+
+        //Create Year Spinner
+        createYearSpinner();
+
     } //main method
+
+    private void createYearSpinner() {
+
+        final String[] yearStrings = {"ปี 1", "ปี 2", "ปี 3", "ปี 4", "มากกว่า ปี 4", "อาจารย์"};
+
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, yearStrings);
+        yearSpinner.setAdapter(stringArrayAdapter);
+
+        yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                yearString = yearStrings[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                yearString = yearStrings[0];
+            }
+        });
+
+    }   // createYearSpinner
 
     public void clickSignUpSign(View view) {
 
