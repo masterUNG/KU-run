@@ -1,6 +1,7 @@
 package kusrc.worapong.preyapron.sriwan.kurun;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -126,6 +127,23 @@ public class SignUpActivity extends AppCompatActivity {
         getResources().getString(R.string.User) + " " + userString + "\n" +
         getResources().getString(R.string.Password) + " " + passwordString);
 
+        builder.setPositiveButton("บันทึก", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                updateDataToMySQL();
+                dialogInterface.dismiss();
+
+            }   // onClick
+        });
+
+        builder.setNegativeButton("แก้ไข", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
 
         builder.show();
 
@@ -133,6 +151,10 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }   // confirmData
+
+    private void updateDataToMySQL() {
+
+    }   // updateToMySQL
 
     private int findAvata(String avataString) {
 
