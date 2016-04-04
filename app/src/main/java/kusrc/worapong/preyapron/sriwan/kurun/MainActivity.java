@@ -1,6 +1,7 @@
 package kusrc.worapong.preyapron.sriwan.kurun;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -71,11 +73,49 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             //No Space
-
+            checkUser();
         }
 
 
     }   // clickSingIn
+
+    private void checkUser() {
+
+        try {
+
+            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
+                    MODE_PRIVATE, null);
+            Cursor cursor = sqLiteDatabase
+                    .rawQuery("SELECT * FROM userTABLE WHERE User = " + "'" + userString + "'", null);
+            cursor.moveToFirst();
+            String[] resultStrings = new String[cursor.getColumnCount()];
+            for (int i = 0; i < cursor.getColumnCount(); i++) {
+                resultStrings[i] = cursor.getString(i);
+            }   // for
+            cursor.close();
+
+            //Check Password
+            if (passwordString.equals(resultStrings[6])) {
+                //Password True
+                Toast.makeText(this, "ยินดีต้อนรับ " + resultStrings[1], Toast.LENGTH_SHORT).show();
+
+            } else {
+                //Password False
+                MyAlertDialog myAlertDialog = new MyAlertDialog();
+                myAlertDialog.myDialog(this, "Password False",
+                        "กรุณาพิมพ์ใหม่ Password ผิด");
+
+            }
+
+
+
+        } catch (Exception e) {
+            MyAlertDialog myAlertDialog = new MyAlertDialog();
+            myAlertDialog.myDialog(this, "ไม่มี User นี้",
+                    "ไม่มี " + userString + " ในฐานข้อมูลของฉัน");
+        }
+
+    }   // checkUser
 
 
     @Override
