@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private String userString, passwordString;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }   // clickSingIn
-
 
 
     @Override
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             try {
 
                 JSONArray jsonArray = new JSONArray(strJSON);
-                for (int i=0;i<jsonArray.length();i++) {
+                for (int i = 0; i < jsonArray.length(); i++) {
 
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.d("KuRun", "UPdate ==> " + e.toString());
             }
-
 
 
             intTABLE += 1;
