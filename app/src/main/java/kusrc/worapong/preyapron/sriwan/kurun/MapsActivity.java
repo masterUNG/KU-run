@@ -5,9 +5,9 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,7 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         criteria.setBearingRequired(false);
 
         //My Loop
-        myLoop();
+        //myLoop();
 
     }   // Main Method
 
@@ -138,10 +138,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        goToCenterMap();
+
+        createAllMarker();
+
     }   // onMapReady
+
+    private void createAllMarker() {
+
+        mMap.clear();
+
+        //for user
+        mMap.addMarker(new MarkerOptions()
+        .position(new LatLng(myLatADouble, myLngADouble)));
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createAllMarker();
+            }
+        }, 3000);
+
+    }   // createAllMarker
+
+    private void goToCenterMap() {
+
+        try {
+
+            LatLng centerLatLng = new LatLng(myLatADouble, myLngADouble);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 16));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }   // toToCenterMap
 
 }   // Main Class
