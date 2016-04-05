@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             Cursor cursor = sqLiteDatabase
                     .rawQuery("SELECT * FROM userTABLE WHERE User = " + "'" + userString + "'", null);
             cursor.moveToFirst();
+
             String[] resultStrings = new String[cursor.getColumnCount()];
             for (int i = 0; i < cursor.getColumnCount(); i++) {
                 resultStrings[i] = cursor.getString(i);
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "ยินดีต้อนรับ " + resultStrings[1], Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                intent.putExtra("Result", resultStrings);
                 startActivity(intent);
 
             } else {
