@@ -223,6 +223,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int findIconMarker(String resultString) {
 
         int intIcon = R.drawable.kon48;
+        int intKey = Integer.parseInt(resultString);
+
+        switch (intKey) {
+
+            case 0:
+                intIcon = R.drawable.kon48;
+                break;
+            case 1:
+                intIcon = R.drawable.rat48;
+                break;
+            case 2:
+                intIcon = R.drawable.bird48;
+                break;
+            case 3:
+                intIcon = R.drawable.doremon48;
+                break;
+            case 4:
+                intIcon = R.drawable.nobita48;
+                break;
+
+        }   // switch
 
         return intIcon;
     }
