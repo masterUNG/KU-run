@@ -238,9 +238,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.clear();   // Delete All Marker
 
         //for user
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(myLatADouble, myLngADouble))
-                .icon(BitmapDescriptorFactory.fromResource(findIconMarker(resultStrings[7]))));
+//        mMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(myLatADouble, myLngADouble))
+//                .icon(BitmapDescriptorFactory.fromResource(findIconMarker(resultStrings[7]))));
 
         //Update Lat, Lng to mySQL
         updateLatLngToMySQL();
