@@ -237,10 +237,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.clear();   // Delete All Marker
 
-        //for user
-//        mMap.addMarker(new MarkerOptions()
-//                .position(new LatLng(myLatADouble, myLngADouble))
-//                .icon(BitmapDescriptorFactory.fromResource(findIconMarker(resultStrings[7]))));
+        // Create Marker Building
+        double[] buildLatDoubles = {13.12362768,13.12512183,13.12090057,13.11748381};
+        double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
+        String[] baseStrings = {"ด่านที่ 1", "ด่านที่ 2", "ด่านที่ 3", "ด่านที่ 4"};
+        int[] iconBaseInts = {5,6,7,8};
+
+        for (int i=0;i<baseStrings.length;i++) {
+
+                makeAllMarker(baseStrings[i],
+                        Integer.toString(iconBaseInts[i]),
+                        Double.toString(buildLatDoubles[i]),
+                        Double.toString(buildLngDoubles[i]));
+
+        }   // for
+
+
+
 
         //Update Lat, Lng to mySQL
         updateLatLngToMySQL();
@@ -255,7 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void run() {
                 createAllMarker();
             }
-        }, 3000);
+        }, 3000);   // เวลาที่ใช้อัพเดท Server 3 วินาที
 
     }   // createAllMarker
 
@@ -319,6 +332,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             case 4:
                 intIcon = R.drawable.nobita48;
+                break;
+            case 5:
+                intIcon = R.drawable.build1;
+                break;
+            case 6:
+                intIcon = R.drawable.build2;
+                break;
+            case 7:
+                intIcon = R.drawable.build3;
+                break;
+            case 8:
+                intIcon = R.drawable.build4;
                 break;
 
         }   // switch
