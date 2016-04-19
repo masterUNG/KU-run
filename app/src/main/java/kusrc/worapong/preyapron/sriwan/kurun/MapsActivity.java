@@ -26,6 +26,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -85,11 +88,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(String strJSON) {
             super.onPostExecute(strJSON);
 
-            Log.d("19April", "strJSON ==> " + strJSON);
+            Log.d("18April", "strJSON ==> " + strJSON);
+
+            try {
+
+                JSONArray jsonArray = new JSONArray(strJSON);
+                for (int i=0;i<jsonArray.length();i++) {
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String strName = jsonObject.getString("Name");
+                    String strAvata = jsonObject.getString("Avata");
+                    String strLat = jsonObject.getString("Lat");
+                    String strLng = jsonObject.getString("Lng");
+
+                    makeAllMarker(strName, strAvata, strLat, strLng);
+
+                }       //for
+
+            } catch (Exception e) {
+                Log.d("19April", "strJSON error ==>" + e.toString());
+            }   // try
+
 
         }   // onPost
     }   // SynLatLng Class
 
+    private void makeAllMarker(String strName,
+                               String strAvata,
+                               String strLat,
+                               String strLng) {
+
+        LatLng latLng = new LatLng(Double.parseDouble(strLat),
+                Double.parseDouble(strLng));
+
+        int intAvata = findIconMarker(strAvata);
+
+        mMap.addMarker(new MarkerOptions()
+        .position(latLng)
+        .icon(BitmapDescriptorFactory.fromResource(intAvata))
+        .title(strName));
+
+
+
+    }   // makeAllMarker
 
 
     private void myLoop() {
