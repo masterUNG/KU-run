@@ -1,6 +1,8 @@
 package kusrc.worapong.preyapron.sriwan.kurun;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -313,8 +315,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double myDistance = distance(myLatADouble, myLngADouble,
                 buildLatDoubles[0], buildLngDoubles[0]);
         Log.d("7MayV1", "myDistance กับ ฐานที่ 1 ==> " + myDistance);
+        if (myDistance <= 10) {
+            myAlert("คุณได้มาถึงฐานที่ 1 แล้ว", R.drawable.base1);
+        }
 
     }   // update
+
+    private void myAlert(String strMessage,
+                         int intIcon) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle(strMessage);
+        builder.setMessage("คุณต้องตอบคำถาม ให้ถูกมากกว่า 3 ข้อขึ้นไปถึงจะสามารถไป ฐานต่อไปได้");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+
+    }   // myAlert
 
 
     //นี่คือ เมทอด ที่หาระยะ ระหว่างจุด
@@ -361,7 +383,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 intIcon = R.drawable.nobita48;
                 break;
             case 5:
-                intIcon = R.drawable.build1;
+                intIcon = R.drawable.base1;
                 break;
             case 6:
                 intIcon = R.drawable.build2;
@@ -370,7 +392,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 intIcon = R.drawable.build3;
                 break;
             case 8:
-                intIcon = R.drawable.build4;
+                intIcon = R.drawable.base4;
                 break;
 
         }   // switch
