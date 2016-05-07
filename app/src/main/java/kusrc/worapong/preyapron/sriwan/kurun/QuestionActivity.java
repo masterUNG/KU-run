@@ -153,7 +153,8 @@ public class QuestionActivity extends AppCompatActivity {
             // Have Choose
             if (timesAnInt < 5) {
 
-
+                //CheckScore
+                checkScore();
 
                 changeView();
             } else {
@@ -165,6 +166,10 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     }   // clickAnswer
+
+    private void checkScore() {
+
+    }   // checkScore
 
     private boolean checkChooseChoice() {
 
