@@ -39,6 +39,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean gpsABoolean, networkABoolean;
     private double myLatADouble, myLngADouble;
     private String[] resultStrings;
+    private double[] buildLatDoubles = {13.12362768,13.12512183,13.12090057,13.11748381};
+    private double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         criteria.setAltitudeRequired(false);
         criteria.setBearingRequired(false);
         resultStrings = getIntent().getStringArrayExtra("Result");
-
-
-        //My Loop
-        //myLoop();
 
     }   // Main Method
 
@@ -102,6 +100,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String strLng = jsonObject.getString("Lng");
 
                     makeAllMarker(strName, strAvata, strLat, strLng);
+
+
 
                 }       //for
 
@@ -238,8 +238,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.clear();   // Delete All Marker
 
         // Create Marker Building
-        double[] buildLatDoubles = {13.12362768,13.12512183,13.12090057,13.11748381};
-        double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
+
+
         String[] baseStrings = {"ด่านที่ 1", "ด่านที่ 2", "ด่านที่ 3", "ด่านที่ 4"};
         int[] iconBaseInts = {5,6,7,8};
 
@@ -253,8 +253,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         }   // for
-
-
 
 
         //Update Lat, Lng to mySQL
@@ -311,7 +309,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        //Find Distance
+
     }   // update
+
+
+    //นี่คือ เมทอด ที่หาระยะ ระหว่างจุด
+    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515 * 1.609344 * 1000; // หน่วยเป็น เมตร
+
+        return (dist);
+    }   // distance
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }   // deg2rad
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }   // rad2deg
+
+
 
     private int findIconMarker(String resultString) {
 
