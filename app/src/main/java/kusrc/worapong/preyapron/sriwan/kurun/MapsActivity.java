@@ -44,6 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String[] resultStrings;
     private double[] buildLatDoubles = {13.12362768,13.12512183,13.12090057,13.11748381};
     private double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
+    private boolean myStatus = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,6 +264,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Synchronize Lat, Lng All User
         SynLatLngAllUser synLatLngAllUser = new SynLatLngAllUser();
+
         synLatLngAllUser.execute();
 
         Handler handler = new Handler();
@@ -272,6 +274,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 createAllMarker();
             }
         }, 3000);   // เวลาที่ใช้อัพเดท Server 3 วินาที
+
 
     }   // createAllMarker
 
@@ -316,7 +319,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double myDistance = distance(myLatADouble, myLngADouble,
                 buildLatDoubles[0], buildLngDoubles[0]);
         Log.d("7MayV1", "myDistance กับ ฐานที่ 1 ==> " + myDistance);
-        if (myDistance <= 10) {
+        if (myDistance <= 10 && myStatus) {
             myAlert("ฐานที่ 1", R.drawable.base1);
         }
 
@@ -324,6 +327,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void myAlert(final String strMessage,
                          final int intIcon) {
+
+        myStatus = false;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
         builder.setCancelable(false);
@@ -339,6 +344,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
 
                 dialogInterface.dismiss();
+
             }
         });
         builder.show();
