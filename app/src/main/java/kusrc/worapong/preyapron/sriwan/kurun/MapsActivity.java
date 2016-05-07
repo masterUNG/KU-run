@@ -310,6 +310,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         //Find Distance
+        double myDistance = distance(myLatADouble, myLngADouble,
+                buildLatDoubles[0], buildLngDoubles[0]);
+        Log.d("7MayV1", "myDistance กับ ฐานที่ 1 ==> " + myDistance);
 
     }   // update
 
