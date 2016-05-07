@@ -28,8 +28,8 @@ public class QuestionActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton choice1RadioButton, choice2RadioButton,
             choice3RadioButton, choice4RadioButton;
-    private String titleString, timesString;
-    private int iconAnInt, timesAnInt = 0, scoreAnInt = 0;
+    private String titleString, timesString, answerString;
+    private int iconAnInt, timesAnInt = 0, scoreAnInt = 0, myChooseAnInt;
     private String[] questionStrings, choice1Strings,
             choice2Strings, choice3Strings, choice4Strings, answerStrings;
 
@@ -48,10 +48,39 @@ public class QuestionActivity extends AppCompatActivity {
         titleTextView.setText(titleString);
         imageView.setImageResource(iconAnInt);
 
+        //RadioController
+        radioController();
+
         ConnectedQuestionJSON connectedQuestionJSON = new ConnectedQuestionJSON();
         connectedQuestionJSON.execute();
 
     }   // Main Method
+
+    private void radioController() {
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                switch (i) {
+                    case R.id.radioButton6:
+                        myChooseAnInt = 1;
+                        break;
+                    case R.id.radioButton7:
+                        myChooseAnInt = 2;
+                        break;
+                    case R.id.radioButton8:
+                        myChooseAnInt = 3;
+                        break;
+                    case R.id.radioButton9:
+                        myChooseAnInt = 4;
+                        break;
+                }
+
+            }   // onCheck
+        });
+
+    }   // radio
 
     public class ConnectedQuestionJSON extends AsyncTask<Void, Void, String> {
         @Override
@@ -125,6 +154,8 @@ public class QuestionActivity extends AppCompatActivity {
         choice3RadioButton.setText(choice3Strings[intIndex]);
         choice4RadioButton.setText(choice4Strings[intIndex]);
 
+        answerString = answerStrings[intIndex];
+
         radioGroup.clearCheck();
 
     } // changView
@@ -151,15 +182,21 @@ public class QuestionActivity extends AppCompatActivity {
                     "โปรดเลือกคำตอบ ด้วยคะ");
         } else {
             // Have Choose
-            if (timesAnInt < 5) {
 
-                //CheckScore
-                checkScore();
+            //CheckScore
+            checkScore();
+
+            if (timesAnInt < 5) {
 
                 changeView();
             } else {
                 Intent intent = new Intent(QuestionActivity.this, ShowScore.class);
+                intent.putExtra("Score", scoreAnInt);
+                intent.putExtra("Base", titleString);
+                intent.putExtra("Icon", iconAnInt);
                 startActivity(intent);
+                scoreAnInt = 0;
+                timesAnInt = 0;
             }
 
         }   // if
@@ -168,6 +205,10 @@ public class QuestionActivity extends AppCompatActivity {
     }   // clickAnswer
 
     private void checkScore() {
+
+        if (myChooseAnInt == Integer.parseInt(answerString)) {
+            scoreAnInt += 1;
+        }
 
     }   // checkScore
 

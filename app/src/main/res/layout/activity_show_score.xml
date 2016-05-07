@@ -16,7 +16,8 @@
         android:text="NEXT"
         android:id="@+id/button5"
         android:layout_alignParentBottom="true"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:onClick="clickNextShowScore" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -46,7 +47,8 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/Test1"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/button5">
 
         <TextView
             android:layout_width="wrap_content"
