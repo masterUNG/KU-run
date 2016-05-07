@@ -50,6 +50,31 @@ public class QuestionActivity extends AppCompatActivity {
 
     public void clickAnswer(View view) {
 
+        if (checkChooseChoice()) {
+            //Not Choose
+            MyAlertDialog myAlertDialog = new MyAlertDialog();
+            myAlertDialog.myDialog(this, "ยังไม่มีการเลือกคำตอบ",
+                    "โปรดเลือกคำตอบ ด้วยคะ");
+        } else {
+            // Have Choose
+
+        }   // if
+
+
+    }   // clickAnswer
+
+    private boolean checkChooseChoice() {
+
+        boolean bolChoose = true; // Not Choose
+
+        if (choice1RadioButton.isChecked() ||
+                choice2RadioButton.isChecked() ||
+                choice3RadioButton.isChecked() ||
+                choice4RadioButton.isChecked()) {
+            bolChoose = false;  // Have Choose
+        }
+
+        return bolChoose;
     }
 
 }   // Main Class
