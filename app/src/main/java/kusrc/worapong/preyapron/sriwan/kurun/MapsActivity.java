@@ -3,6 +3,7 @@ package kusrc.worapong.preyapron.sriwan.kurun;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -316,13 +317,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 buildLatDoubles[0], buildLngDoubles[0]);
         Log.d("7MayV1", "myDistance กับ ฐานที่ 1 ==> " + myDistance);
         if (myDistance <= 10) {
-            myAlert("คุณได้มาถึงฐานที่ 1 แล้ว", R.drawable.base1);
+            myAlert("ฐานที่ 1", R.drawable.base1);
         }
 
     }   // update
 
-    private void myAlert(String strMessage,
-                         int intIcon) {
+    private void myAlert(final String strMessage,
+                         final int intIcon) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
         builder.setCancelable(false);
@@ -331,6 +332,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                Intent intent = new Intent(MapsActivity.this, QuestionActivity.class);
+                intent.putExtra("Base", strMessage);
+                intent.putExtra("Icon", intIcon);
+                startActivity(intent);
+
                 dialogInterface.dismiss();
             }
         });
