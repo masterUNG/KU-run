@@ -386,10 +386,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 intIcon = R.drawable.base1;
                 break;
             case 6:
-                intIcon = R.drawable.build2;
+                intIcon = R.drawable.base2;
                 break;
             case 7:
-                intIcon = R.drawable.build3;
+                intIcon = R.drawable.base3;
                 break;
             case 8:
                 intIcon = R.drawable.base4;
