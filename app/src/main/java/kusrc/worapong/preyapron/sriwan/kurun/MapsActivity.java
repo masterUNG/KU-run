@@ -46,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
     private boolean myStatus = true;
     private int userGoldAnInt;
+    private SynLatLngAllUser synLatLngAllUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,7 +264,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         updateLatLngToMySQL();
 
         //Synchronize Lat, Lng All User
-        SynLatLngAllUser synLatLngAllUser = new SynLatLngAllUser();
+        synLatLngAllUser = new SynLatLngAllUser();
         synLatLngAllUser.execute();
 
         Handler handler = new Handler();
@@ -338,6 +339,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
 
                 dialogInterface.dismiss();
+                synLatLngAllUser.cancel(true);
+                finish();
 
             }
         });
