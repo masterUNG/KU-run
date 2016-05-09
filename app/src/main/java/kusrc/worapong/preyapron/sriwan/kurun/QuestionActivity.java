@@ -29,15 +29,20 @@ public class QuestionActivity extends AppCompatActivity {
     private RadioButton choice1RadioButton, choice2RadioButton,
             choice3RadioButton, choice4RadioButton;
     private String titleString, timesString, answerString;
-    private int iconAnInt, timesAnInt = 0, scoreAnInt = 0, myChooseAnInt;
+    private int iconAnInt, timesAnInt = 0, scoreAnInt = 0,
+            myChooseAnInt, userGoldAnInt;
     private String[] questionStrings, choice1Strings,
-            choice2Strings, choice3Strings, choice4Strings, answerStrings;
+            choice2Strings, choice3Strings, choice4Strings,
+            answerStrings, resultStrings;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+        resultStrings = getIntent().getStringArrayExtra("Result");
+        userGoldAnInt = getIntent().getIntExtra("Gold", 0);
 
         //Bind Widget
         bindWidget();
@@ -55,6 +60,21 @@ public class QuestionActivity extends AppCompatActivity {
         connectedQuestionJSON.execute();
 
     }   // Main Method
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("7MayV3", "onRestart Start");
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
 
     private void radioController() {
 
@@ -194,6 +214,8 @@ public class QuestionActivity extends AppCompatActivity {
                 intent.putExtra("Score", scoreAnInt);
                 intent.putExtra("Base", titleString);
                 intent.putExtra("Icon", iconAnInt);
+                intent.putExtra("Result", resultStrings);
+                intent.putExtra("Gold", userGoldAnInt);
                 startActivity(intent);
                 scoreAnInt = 0;
                 timesAnInt = 0;

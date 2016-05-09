@@ -45,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double[] buildLatDoubles = {13.12362768,13.12512183,13.12090057,13.11748381};
     private double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
     private boolean myStatus = true;
+    private int userGoldAnInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         criteria.setAltitudeRequired(false);
         criteria.setBearingRequired(false);
         resultStrings = getIntent().getStringArrayExtra("Result");
+
+        myStatus = getIntent().getBooleanExtra("Status", true);
 
     }   // Main Method
 
@@ -103,9 +106,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String strLat = jsonObject.getString("Lat");
                     String strLng = jsonObject.getString("Lng");
 
+                    if (strName.equals(resultStrings[1])) {
+                        userGoldAnInt = Integer.parseInt(jsonObject.getString("Gold"));
+
+                        //Find Distance
+                        Log.d("8MayV1", "userGold ==> " + userGoldAnInt);
+
+                        double myDistance = distance(myLatADouble, myLngADouble,
+                                buildLatDoubles[userGoldAnInt], buildLngDoubles[userGoldAnInt]);
+                        Log.d("8MayV1", "myDistance กับ ฐานที่ " + (userGoldAnInt + 1) + " ===> " + myDistance);
+                        if (myDistance <= 10 && myStatus) {
+                            myAlert("ฐานที่ " + Integer.toString(userGoldAnInt + 1), R.drawable.base1);
+                        }
+
+                    }   // if
+
                     makeAllMarker(strName, strAvata, strLat, strLng);
-
-
 
                 }       //for
 
@@ -132,24 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         .icon(BitmapDescriptorFactory.fromResource(intAvata))
         .title(strName));
 
-
-
     }   // makeAllMarker
 
-
-    private void myLoop() {
-
-        Log.d("5April", "Location = " + myLatADouble + " , " + myLngADouble);
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-               myLoop();
-            }
-        }, 3000);
-
-    } // myLoop
 
     @Override
     protected void onResume() {
@@ -264,7 +264,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Synchronize Lat, Lng All User
         SynLatLngAllUser synLatLngAllUser = new SynLatLngAllUser();
-
         synLatLngAllUser.execute();
 
         Handler handler = new Handler();
@@ -315,19 +314,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        //Find Distance
-        double myDistance = distance(myLatADouble, myLngADouble,
-                buildLatDoubles[0], buildLngDoubles[0]);
-        Log.d("7MayV1", "myDistance กับ ฐานที่ 1 ==> " + myDistance);
-        if (myDistance <= 10 && myStatus) {
-            myAlert("ฐานที่ 1", R.drawable.base1);
-        }
+
 
     }   // update
 
     private void myAlert(final String strMessage,
                          final int intIcon) {
-
         myStatus = false;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
@@ -341,6 +333,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Intent intent = new Intent(MapsActivity.this, QuestionActivity.class);
                 intent.putExtra("Base", strMessage);
                 intent.putExtra("Icon", intIcon);
+                intent.putExtra("Result", resultStrings);
+                intent.putExtra("Gold", userGoldAnInt);
                 startActivity(intent);
 
                 dialogInterface.dismiss();
