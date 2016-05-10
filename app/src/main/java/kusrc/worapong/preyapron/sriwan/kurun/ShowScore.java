@@ -16,12 +16,15 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ShowScore extends AppCompatActivity {
 
     //Explicit
     private TextView titleTextView, scoreTextView, detailTextView;
-    private String titleString, scoreString, detailString;
+    private String titleString, scoreString, detailString, dateString;
     private ImageView imageView;
     private boolean bolStatus = false; // คะแนนไม่ผ่าน
     private String[] resultStrings;
@@ -34,6 +37,10 @@ public class ShowScore extends AppCompatActivity {
 
         resultStrings = getIntent().getStringArrayExtra("Result");
         userGoldAnInt = getIntent().getIntExtra("Gold", 0);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        dateString = dateFormat.format(date);
 
         //Bind Widget
         bindWidget();
@@ -80,6 +87,30 @@ public class ShowScore extends AppCompatActivity {
                     .post(requestBody).build();
             Call call = okHttpClient.newCall(request);
             call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+
+                }
+            });
+
+            //อัพข้อมูลไป historyTABLE
+            String historyURL = "http://swiftcodingthai.com/keng/php_add_history.php";
+            OkHttpClient okHttpClient1 = new OkHttpClient();
+            RequestBody requestBody1 = new FormEncodingBuilder()
+                    .add("isAdd", "true")
+                    .add("Name", resultStrings[1])
+                    .add("Date", dateString)
+                    .add("Gold", Integer.toString(userGoldAnInt))
+                    .build();
+            Request.Builder builder1 = new Request.Builder();
+            Request request1 = builder1.url(historyURL).post(requestBody1).build();
+            Call call1 = okHttpClient1.newCall(request1);
+            call1.enqueue(new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
 

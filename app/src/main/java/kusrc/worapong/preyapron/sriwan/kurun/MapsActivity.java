@@ -339,7 +339,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
 
                 dialogInterface.dismiss();
-                synLatLngAllUser.cancel(true);
+               // synLatLngAllUser.cancel(true);
                 finish();
 
             }
